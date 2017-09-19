@@ -493,10 +493,13 @@ def check_validity(list_of_trees):
 sample1 = ["if A, then B", "A", "B"]
 sample2 = ["if A, then B", "not ( B )", "not ( A )"]
 sample3 = ["if A, then B", "if B, then C", "if A, then C"]
+sample3_A = ["if A, then B", "if B, then C", "if C, then A"]
 sample4 = ["A or B", "not ( A )", "B"]
-sample5 = ["not ( not ( A ) )", "A"]
+sample5 = ["not ( not ( not ( not ( A ) ) ) )", "A"]
 sample6 = ["A", "A or B"]
 sample7 = ["A and B", "A"]
+
+sample8 = ["( if p, then q ) and ( if r, then s )", "p or r", "q or s"] #is Valid
 
 def answer_truth_table_validity(list_of_statements):
 	"""
@@ -505,9 +508,9 @@ def answer_truth_table_validity(list_of_statements):
 
 	1.  Break all the statements into lists of atomic sentences and connectives.
 	2. 	Identify all the atomic sentences.
-	3.  Generate lists of truth values for the atomic sentences and map different atomic sentences to lists of truth values in different orders,
-		such that when the truth values of atomic sentences are displayed in the truth table, each row has distinct combination of truth values.
-	4.	For the lists taken from step (1), create a logic tree for each list. Find out the truth values for each node as well as their descriptions.
+	3.  Generate lists of truth values for the atomic sentences and map different atomic sentences to columns of truth values created such that 
+		when the columns of truth values of atomic sentences are displayed in the truth table, each row has distinct combination of truth values.
+	4.	For the lists taken from step (1), create a Logic Tree for each list. Find out the truth values for each node as well as their descriptions.
 	    Map all the internal nodes to their respective truth values using truth_tables_complex_sent method.
 	5. 	Append all the logic trees into the list logic_trees and append the mapping from step (4) to the list logic_trees_complex.
 	6.  Print the truth table using the function print_truth_table.
@@ -528,6 +531,8 @@ def answer_truth_table_validity(list_of_statements):
 		logic_trees_complex.append(T.truth_tables_output)
 
 	print_truth_table(truth_values_atomic_sentences, logic_trees, logic_trees_complex)
-	print(list_of_statements, check_validity(logic_trees))
+	print("Premises: ", list_of_statements[:-1], "\nConclusion: ", list_of_statements[-1], "\n", check_validity(logic_trees))
 
-answer_truth_table_validity(sample7)
+answer_truth_table_validity(sample3)
+print()
+answer_truth_table_validity(sample3_A)
